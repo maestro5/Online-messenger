@@ -1,0 +1,37 @@
+.row
+  .col-md-8.col-md-offset-2
+    h2.text-center Edit Message
+    br
+    == slim :"shared/_errors", locals: { obj: @message }
+    form action="/message/#{@message.secure_id}" method='post' role='form'
+      .form-group
+        input type='hidden' name='_method' value='put'
+        label for='message_title' Title:
+        br
+        input.form-control id='message_title' name='message[title]' type='text' value='#{@message.title}'
+      .form-group
+        label for='message_body' Body:
+        br
+        textarea.form-control id="message_body" name="message[body]" rows="10" = @message.body
+      .form-group
+        p 
+          strong Destruction message after:
+        .form-check
+          label.form-check-label for='message_visits'
+            - if @message.destruction == 'visits'
+              input#message_visits.form-check-input type='radio' name='message[destruction]' value='visits' checked='checked'
+            - else
+              input#message_visits.form-check-input type='radio' name='message[destruction]' value='visits'
+            |  
+            input type='number' name='destruction[visits]' min='1' value=destruction_value('visits')
+            |  visits
+        .form-check
+          label.form-check-label for='message_timeout'
+            - if @message.destruction == 'timeout'
+              input#message_timeout.form-check-input type='radio' name='message[destruction]' value='timeout' checked='checked'
+            - else
+              input#message_timeout.form-check-input type='radio' name='message[destruction]' value='timeout'
+            |  
+            input type='number' name='destruction[timeout]'  min='1' value=destruction_value('timeout')
+            |  hours
+      button.btn.btn-success type='submit' Submit

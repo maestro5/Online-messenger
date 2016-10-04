@@ -1,0 +1,6 @@
+- if obj && obj.errors.any?
+  - obj.errors.full_messages.each do |msg|
+    div.alert.alert-danger.alert-dismissible.fade.in role="alert"  
+      a.close[data-dismiss="alert"]
+        | &#215
+      p.panel-body = msg

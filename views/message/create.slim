@@ -1,0 +1,30 @@
+.row
+  .col-md-8.col-md-offset-2
+    h2.text-center Create Message
+    br
+    == slim :"shared/_errors", locals: { obj: @message }
+    form action='/message' method='post' role='form'
+      .form-group
+        label for='message_title' Title:
+        br
+        input.form-control id='message_title' name='message[title]' type='text' value='#{@message.title}'
+      .form-group
+        label for='message_body' Body:
+        br
+        textarea.form-control id="message_body" name="message[body]" rows="10" = @message.body
+      .form-group
+        p 
+          strong Destruction message after:
+        .form-check
+          label.form-check-label for='message_visits'
+            input#message_visits.form-check-input type='radio' name='message[destruction]' value='visits' checked='checked'
+            |  
+            input type='number' name='destruction[visits]' min='1' value='1'
+            |  visits
+        .form-check
+          label.form-check-label for='message_timeout'
+            input#message_timeout.form-check-input type='radio' name='message[destruction]' value='timeout'
+            |  
+            input type='number' name='destruction[timeout]'  min='1' value='1'
+            |  hours
+      button.btn.btn-success type='submit' Submit
